@@ -5,11 +5,12 @@ public class Main {
         JFrame myFrame = new JFrame("Routing Table Simulator");
         RoutingTable myTable = new RoutingTable();
 
-        myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myFrame.setContentPane(myTable);
-        myFrame.pack();
-        myFrame.setLocationRelativeTo(null);
-        myFrame.setVisible(true);
+        // GUI stuff
+        // myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // myFrame.setContentPane(myTable);
+        // myFrame.pack();
+        // myFrame.setLocationRelativeTo(null);
+        // myFrame.setVisible(true);
         myTable.run();
     }
 }
