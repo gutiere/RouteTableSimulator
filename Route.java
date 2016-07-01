@@ -16,6 +16,7 @@ public class Route {
     int myCost; //hops
     String myDevice;
     Random myRand;
+    String myStatus;
 
 
     Route(int theSeqNum) {
@@ -25,7 +26,7 @@ public class Route {
         myTime = dateFormat.format(cal.getTime());
         myCost = myRand.nextInt(99) + 1;
         myPortNumber = "E3";
-
+        myStatus = "Active";
         do {
             myDevice = ipGenerator();
             myDestAddress = ipGenerator();
@@ -42,6 +43,7 @@ public class Route {
         mySeqNum = theSeqNum;
         myTime = dateFormat.format(cal.getTime());
         myDevice = ipGenerator();
+        myStatus = "Active";
     }
 
     private void instantiations() {
@@ -72,8 +74,46 @@ public class Route {
         sb.append(myDestAddress + "\t\t");
         sb.append(myCost + "\t");
         sb.append(myPortNumber + "\t");
-        sb.append(myDevice);
+        sb.append(myDevice+"\t");
+        sb.append(myStatus);
         return sb.toString();
     }
-
+    
+    public void setStatus(String theStatus){
+    	myStatus = theStatus;
+    }
+    
+    public String getStatus(){
+    	return myStatus;
+    }
+    public String getDestination(){
+    	return myDestAddress;
+    }
+    public void setDestination(String theDestination){
+    	myDestAddress = theDestination;
+    }
+    public String getPort(){
+    	return myPortNumber;
+    }
+    public void setPort(String thePortNumber){
+    	myPortNumber = thePortNumber;
+    }
+    public int getCost(){
+    	return myCost;
+    }
+    public void setCost(int theCost){
+    	myCost = theCost;
+    }
+    public String getMyDevice(){
+    	return myDevice;
+    }
+    public void setMyDevice(String theDevice){
+    	myDevice = theDevice;
+    }
+    public String getMyTime(){
+    	return myTime;
+    }
+    public void setTime(String theTime){
+    	myTime = theTime;
+    }
 }
