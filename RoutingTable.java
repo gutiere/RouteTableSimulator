@@ -72,11 +72,6 @@ public class RoutingTable extends JPanel {
         }
     }
 
-
-<<<<<<< HEAD
-    private static void print() {
-        System.out.println("\nSeq # \t\t Time \t\t Destination \t       Metric    Port     Device       Status");
-=======
     private void print() {
         // GUI stuff
 
@@ -90,11 +85,9 @@ public class RoutingTable extends JPanel {
         // myLabel.setText(sb.toString());
 
 
-        System.out.println("\nSeq # \t\t Time \t\t Destination \t       Metric    Port     Device");
->>>>>>> origin/master
+        System.out.println("\nSeq # \t\t Time \t\t Destination \t       Metric    Port     Device       Status");
         for (Route r : myRoutes) {
             System.out.println(r);
         }
-
     }
 }
