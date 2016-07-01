@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.lang.StringBuilder;
+import java.util.Random;
 
 public class Route {
     DateFormat dateFormat;
@@ -14,28 +15,54 @@ public class Route {
     String myPortNumber;
     int myCost; //hops
     String myDevice;
+    Random myRand;
 
 
     Route(int theSeqNum) {
-        dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        cal = Calendar.getInstance();
-        //myDestAddress = theDest;
-        //myCost = theCost;
-        //myPortNumber = thePort;
+        instantiations();
+
         mySeqNum = theSeqNum;
         myTime = dateFormat.format(cal.getTime());
-        //myDevice = theDevice;
+        myCost = myRand.nextInt(99) + 1;
+        myPortNumber = "E3";
+
+        do {
+            myDevice = ipGenerator();
+            myDestAddress = ipGenerator();
+        } while (myDevice.equals(myDestAddress));
     }
 
-    Route(String theDest, int theCost, String thePort, int theSeqNum, String theDevice) {
-        dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        cal = Calendar.getInstance();
+
+
+    Route(String theDest, String thePort, int theSeqNum) {
+        instantiations();
         myDestAddress = theDest;
-        myCost = theCost;
+        myCost = myRand.nextInt(15);
         myPortNumber = thePort;
         mySeqNum = theSeqNum;
         myTime = dateFormat.format(cal.getTime());
-        myDevice = theDevice;
+        myDevice = ipGenerator();
+    }
+
+    private void instantiations() {
+        dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        cal = Calendar.getInstance();
+        myRand = new Random();
+    }
+
+    private String ipGenerator() {
+        StringBuilder sb = new StringBuilder();
+        sb.append((myRand.nextInt(254) + 1));
+        sb.append('.');
+        sb.append((myRand.nextInt(254) + 1));
+        sb.append('.');
+        sb.append((myRand.nextInt(254) + 1));
+        sb.append('.');
+        sb.append((myRand.nextInt(254) + 1));
+
+        return sb.toString();
+
+        // return "N/A";
     }
 
     public String toString() {
