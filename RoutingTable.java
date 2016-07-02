@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class RoutingTable extends JPanel {
+public class RoutingTable {
     private ArrayList<Route> myRoutes;
     private Random myRandom;
     private int mySequenceNumber;
