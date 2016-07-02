@@ -37,27 +37,27 @@ public class RoutingTable extends JPanel {
         	Route r1 = new Route(myRoutes.size()+1);
             if (i % 10 == 0) {
                 // Update
-            	for(int a = 0; a < myRoutes.size();a++){
+            	for(int a = 0; a < myRoutes.size(); a++){
             		if(myRoutes.size() > i){
-            			if(myRoutes.get(i).getDestination.equal(r1.getDestination &&
-            					myRoutes.get(i).getPort().equal(r1.getPort() &&
-            							myRoutes.get(i).getMyDevice.equal(r1.getMyDevice)))) {
+            			if(myRoutes.get(a).getDestination().equals(r1.getDestination()) &&
+            					myRoutes.get(a).getPort().equals(r1.getPort()) &&
+            					myRoutes.get(a).getMyDevice().equals(r1.getMyDevice())) {
 
-            				myRoutes.get(i).setTime(r1.getMyTime());
-            				myRoutes.get(i).setCost(r1.getCost());
-            				myRoutes.get(i).setStatus("Active");
+            				myRoutes.get(a).setTime(r1.getMyTime());
+            				myRoutes.get(a).setCost(r1.getCost());
+            				myRoutes.get(a).setStatus("Active");
             				break;
             			}
             		}
             	}
             } else if (i % 13 == 0) {
                 // setinactive for the status
-            	if(myRoutes.size()>i){
+            	if(myRoutes.size() > i){
             		myRoutes.get(i).setStatus("Inactive");
             	}
             } else if(i %19 == 0){
             	//remove inactive link
-            	if(myRoutes.size() > i && myRoutes.get(i).getStatus.equal("Inactive")){
+            	if(myRoutes.size() > i && myRoutes.get(i).getStatus().equals("Inactive")){
             		myRoutes.remove(i);
             	}
             } else {
