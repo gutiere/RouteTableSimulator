@@ -1,93 +1,77 @@
 import java.util.ArrayList;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.GridLayout;
-import javax.swing.JScrollPane;
-import java.awt.Dimension;
+import java.util.Random;
 
 public class RoutingTable extends JPanel {
-    private  ArrayList<Route> myRoutes;
-    private GridLayout myGrid;
-    private JScrollPane myScroller;
-    private JLabel myLabel;
+    private ArrayList<Route> myRoutes;
+    private Random myRandom;
+    private int mySequenceNumber;
 
     public RoutingTable() {
         init();
     }
 
     private void init() {
+        mySequenceNumber = 1;
         myRoutes = new ArrayList<Route>();
-        myRoutes.add(new Route("0.0.0.0       ", "E1", myRoutes.size() + 1));
-
-
-
-        // GUI stuff
-
-        this.setPreferredSize(new Dimension(600, 400));
-        myGrid = new GridLayout(2, 6);
-        myLabel = new JLabel();
-        myScroller = new JScrollPane(myLabel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        myScroller.setSize(new Dimension(600, 400));
-        this.add(myScroller);
+        myRoutes.add(new Route("0.0.0.0       ", "E1", mySequenceNumber++));
+        myRandom = new Random();
     }
 
-
     public void run() {
-        for (int i = 0; i < 1000; i++) {
-        	Route r1 = new Route(myRoutes.size()+1);
-            if (i % 10 == 0) {
-                // Update
-            	for(int a = 0; a < myRoutes.size(); a++){
-            		if(myRoutes.size() > i){
-            			if(myRoutes.get(a).getDestination().equals(r1.getDestination()) &&
-            					myRoutes.get(a).getPort().equals(r1.getPort()) &&
-            					myRoutes.get(a).getMyDevice().equals(r1.getMyDevice())) {
 
-            				myRoutes.get(a).setTime(r1.getMyTime());
-            				myRoutes.get(a).setCost(r1.getCost());
-            				myRoutes.get(a).setStatus("Active");
-            				break;
-            			}
-            		}
-            	}
-            } else if (i % 13 == 0) {
-                // setinactive for the status
-            	if(myRoutes.size() > i){
-            		myRoutes.get(i).setStatus("Inactive");
-            	}
-            } else if(i %19 == 0){
-            	//remove inactive link
-            	if(myRoutes.size() > i && myRoutes.get(i).getStatus().equals("Inactive")){
-            		myRoutes.remove(i);
-            	}
+        while (true) {
+            int rand = myRandom.nextInt(12); // 0 to 11
+            System.out.println("Random int: " + rand);
+            // Print data to console.
+            print();
+            if (rand % 3 == 0 && myRoutes.size() > 1) {
+                int randomIndex = myRandom.nextInt(myRoutes.size() - 1) + 1;
+                // Update, the route has now been input again.
+    			myRoutes.get(randomIndex).updateTime();
+                myRoutes.get(randomIndex).setSeqNum(mySequenceNumber++);
+                System.out.println("UPDATING - SEQ#: " + myRoutes.get(randomIndex).getSeqNum());
+            } else if (rand % 5 == 0 && myRoutes.size() > 1) {
+                // Set a random route to inactive. Excluding the gateway.
+                myRoutes.get(myRandom.nextInt(myRoutes.size() - 1) + 1).setStatus("Inactive");
+                System.out.println("SETTING INACTIVE - SEQ#: " + mySequenceNumber);
+            } else if(rand == 11 && myRoutes.size() > 1){
+            	// Remove inactive routes
+            	for (int index = 1; index < myRoutes.size(); index++) {
+                    if (myRoutes.get(index).getStatus().equals("Inactive")) {
+                        System.out.println("REMOVING INACTIVE - SEQ#: " + myRoutes.get(index).getSeqNum());
+                        myRoutes.remove(index);
+                    }
+                }
             } else {
-                // add
-                myRoutes.add(new Route(myRoutes.size() + 1)); //Random add
+                System.out.println("ADDING NEW ROUTE - SEQ#: " + mySequenceNumber);
+                // Add a new route.
+                Route r1 = new Route(mySequenceNumber++);
+                if (myRoutes.size() == 1) {
+                    myRoutes.add(r1);
+                } else {
+                    boolean bool = true;
+                    for (int a = 0; a < myRoutes.size(); a++) {
+                        if (myRoutes.get(a).equals(r1)) {
+                            bool = bool & false;
+                        }
+                    }
+                    if (bool) myRoutes.add(r1);
+                }
             }
 
-            print();
+            // Delay for visual recognition.
             try {
-                Thread.sleep(2000);
+                Thread.sleep(4000);
             } catch(Exception e) {}
         }
     }
 
     private void print() {
-        // GUI stuff
-
-        // StringBuilder sb = new StringBuilder();
-        // sb.append("<html>");
-        // sb.append("<br>Seq # \t\t Time \t\t Destination \t       Metric    Port     Device<br>");
-        // for (Route r : myRoutes) {
-        //     sb.append(r + "<br>");
-        // }
-        // sb.append("</html>");
-        // myLabel.setText(sb.toString());
-
-
-        System.out.println("\nSeq # \t\t Time \t\t Destination \t       Metric    Port     Device       Status");
+        System.out.println("\n------------------------------------------------------------------------------------------------");
+        System.out.println("Seq # \t\t Time \t\t Destination \t       Metric    Port     Device       Status");
         for (Route r : myRoutes) {
             System.out.println(r);
         }
+        System.out.println("------------------------------------------------------------------------------------------------\n");
     }
 }

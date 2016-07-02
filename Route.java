@@ -67,6 +67,15 @@ public class Route {
         // return "N/A";
     }
 
+    public boolean equals(Route theRoute) {
+        boolean bool = true;
+        bool = bool & myDestAddress.equals(theRoute.getDestination());
+        bool = bool & (myCost == theRoute.getCost());
+        bool = bool & myPortNumber.equals(theRoute.getPort());
+        bool = bool & myDevice.equals(theRoute.getMyDevice());
+        return bool;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(mySeqNum + "\t");
@@ -78,11 +87,11 @@ public class Route {
         sb.append(myStatus);
         return sb.toString();
     }
-    
+
     public void setStatus(String theStatus){
     	myStatus = theStatus;
     }
-    
+
     public String getStatus(){
     	return myStatus;
     }
@@ -113,7 +122,15 @@ public class Route {
     public String getMyTime(){
     	return myTime;
     }
-    public void setTime(String theTime){
-    	myTime = theTime;
+    public void updateTime(){
+    	myTime = dateFormat.format(cal.getTime());
+    }
+
+    public int getSeqNum() {
+        return mySeqNum;
+    }
+
+    public void setSeqNum(int theSeqNum) {
+        mySeqNum = theSeqNum;
     }
 }
