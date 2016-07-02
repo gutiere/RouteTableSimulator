@@ -24,14 +24,17 @@ public class RoutingTable {
             print();
             if (rand % 3 == 0 && myRoutes.size() > 1) {
                 int randomIndex = myRandom.nextInt(myRoutes.size() - 1) + 1;
+                int oldSeqNum = myRoutes.get(randomIndex).getSeqNum();
                 // Update, the route has now been input again.
     			myRoutes.get(randomIndex).updateTime();
                 myRoutes.get(randomIndex).setSeqNum(mySequenceNumber++);
-                System.out.println("UPDATING - SEQ#: " + myRoutes.get(randomIndex).getSeqNum());
+                myRoutes.get(randomIndex).setStatus("Active");
+                System.out.println("UPDATING - SEQ#: " + oldSeqNum + " to " + myRoutes.get(randomIndex).getSeqNum());
             } else if (rand % 5 == 0 && myRoutes.size() > 1) {
                 // Set a random route to inactive. Excluding the gateway.
-                myRoutes.get(myRandom.nextInt(myRoutes.size() - 1) + 1).setStatus("Inactive");
-                System.out.println("SETTING INACTIVE - SEQ#: " + mySequenceNumber);
+                int randomIndex = myRandom.nextInt(myRoutes.size() - 1) + 1;
+                myRoutes.get(randomIndex).setStatus("Inactive");
+                System.out.println("SETTING INACTIVE - SEQ#: " + myRoutes.get(randomIndex).getSeqNum());
             } else if(rand == 11 && myRoutes.size() > 1){
             	// Remove inactive routes
             	for (int index = 1; index < myRoutes.size(); index++) {
