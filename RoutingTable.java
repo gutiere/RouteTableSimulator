@@ -18,10 +18,8 @@ public class RoutingTable {
     }
 
     public void run() {
-
         while (true) {
             int rand = myRandom.nextInt(12); // 0 to 11
-            System.out.println("Random int: " + rand);
             // Print data to console.
             print();
             if (rand % 3 == 0 && myRoutes.size() > 1) {
